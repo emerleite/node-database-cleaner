@@ -20,6 +20,7 @@ Dependencies
 Usuage
 ------
 > var databaseCleaner = require('database-cleaner');
+>
 > databaseCleaner.clean(database, callback);
 
 ### More
