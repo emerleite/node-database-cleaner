@@ -19,8 +19,8 @@ Dependencies
 
 Usuage
 ------
-var databaseCleaner = require('database-cleaner');
-databaseCleaner.clean(database, callback);
+> var databaseCleaner = require('database-cleaner');
+> databaseCleaner.clean(database, callback);
 
 ### More
 For more info take a look at test folder. To see in action take a look
