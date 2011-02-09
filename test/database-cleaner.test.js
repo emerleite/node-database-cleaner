@@ -36,5 +36,17 @@ module.exports = testCase({
         });
       });
     });
+  },
+  'should not delete system.indexes collection': function(test) {
+    var db = this.connection.db;
+    databaseCleaner.clean(db, function () {
+      db.collection('system.indexes', function (skip, collection) {
+        collection.count({}, function (err, count) {
+          console.log("system.indexes count:" + count);
+          test.ok(count > 0);
+          test.done();
+        });
+      });
+    });
   }
 });
