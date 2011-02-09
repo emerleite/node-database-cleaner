@@ -5,5 +5,6 @@
 , "author" : "Emerson Macedo <emerleite@gmail.com>"
 , "repository" : { "type": "git"
                 , "url": "git://github.com/emerleite/node-database-cleaner.git" }
-, "engines" :       { "node" : ">=0.2.5" }
+, "engines" : { "node" : ">=0.2.5" }
+, dependencies": { "mongodb": ">= 0.8.0" }
 }
