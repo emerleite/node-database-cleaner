@@ -1,0 +1,9 @@
+{ "name" : "database-cleaner"
+, "description" : "Database Cleaner for node.js"
+, "keywords" : [ "database", "cleaner", "tests", "package.json" ]
+, "version" : "0.1.0"
+, "author" : "Emerson Macedo <emerleite@gmail.com>"
+, "repository" : { "type": "git"
+                , "url": "git://github.com/emerleite/node-database-cleaner.git" }
+, "engines" :       { "node" : ">=0.2.5" }
+}
