@@ -26,7 +26,7 @@ Usuage
 ### Examples
 Take look at test folder to see how it works
 
-A full example can be found at (<https://github.com/emerleite/node-rating/blob/master/test/node-rating.test.js>)
+A full example can be found at (<https://github.com/emerleite/node-rating/commit/b0844dc3c8d525083d9b16b5077ac21badf22b2b>)
 
 Running tests
 -------------
