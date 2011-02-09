@@ -10,10 +10,9 @@ Dependencies
 
 ### Runtime
 * Node 0.2.x+
-* node-mongodb-native
+* node-mongodb-native (a.k.a mongodb)
 
 ### Development/Tests
-* npm
 * nodeunit
 * mongoose
 
