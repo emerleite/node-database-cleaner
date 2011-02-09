@@ -2,6 +2,9 @@ Node.js Database Cleaner
 ========================
 The simplest way to clean your database. Removes all data. Starting only with mongodb, but will support mainstream databases.
 
+Say you're doing test cases. How can you clean up your data after each
+test run? With Database Cleaner you can simply do it with one line of code.
+
 Dependencies
 ------------
 
@@ -17,10 +20,11 @@ Dependencies
 Usuage
 ------
 var databaseCleaner = require('database-cleaner');
-databaseCleaner.clean(connection, callback);
+databaseCleaner.clean(database, callback);
 
 ### More
-For more info take a look at test folder.
+For more info take a look at test folder. To see in action take a look
+at node-rating (<https://github.com/emerleite/node-rating/blob/master/test/node-rating.test.js>)
 
 Running tests
 -------------
