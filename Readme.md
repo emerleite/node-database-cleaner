@@ -34,8 +34,7 @@ $ nodeunit test
 
 To-Do
 -----
-* Use Serial library to clean code and tests
-* Suppoort other databases (MySQL, CouchDB, Oracle, SQlite, etc)
+* see (<https://github.com/emerleite/node-database-cleaner/issues>)
 
 Author
 ------
