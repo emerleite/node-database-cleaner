@@ -23,9 +23,10 @@ Usuage
 >
 > databaseCleaner.clean(database, callback);
 
-### More
-For more info take a look at test folder. To see in action take a look
-at node-rating (<https://github.com/emerleite/node-rating/blob/master/test/node-rating.test.js>)
+### Examples
+Take look at test folder to see how it works
+
+A full example can be found at (<https://github.com/emerleite/node-rating/blob/master/test/node-rating.test.js>)
 
 Running tests
 -------------
