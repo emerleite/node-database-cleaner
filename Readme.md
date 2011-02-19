@@ -16,6 +16,10 @@ Dependencies
 * nodeunit
 * mongoose
 
+Instalation
+-----------
+> npm install gravatar
+
 Usuage
 ------
 > var databaseCleaner = require('database-cleaner');
