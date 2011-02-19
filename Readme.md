@@ -18,7 +18,7 @@ Dependencies
 
 Instalation
 -----------
-> npm install gravatar
+> npm install database-cleaner 
 
 Usuage
 ------
