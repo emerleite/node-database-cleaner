@@ -11,10 +11,13 @@ Dependencies
 ### Runtime
 * Node 0.2.x+
 * node-mongodb-native (a.k.a mongodb)
+* redis
 
 ### Development/Tests
 * nodeunit
 * mongoose
+* hredis
+* redis
 
 Instalation
 -----------
@@ -22,14 +25,15 @@ Instalation
 
 Usuage
 ------
-> var databaseCleaner = require('database-cleaner');
+> var DatabaseCleaner = require('database-cleaner');
+> var databaseCleaner = new DatabaseCleaner(type); //type = 'mongodb|redis'
 >
 > databaseCleaner.clean(database, callback);
 
 ### Examples
 Take look at test folder to see how it works
 
-A full example can be found at (<https://github.com/emerleite/node-rating/commit/b0844dc3c8d525083d9b16b5077ac21badf22b2b>)
+A full example can be found at (<https://github.com/emerleite/node-rating/blob/master/test/hit.test.js>)
 
 Running tests
 -------------

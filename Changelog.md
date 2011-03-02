@@ -1,3 +1,7 @@
+### 0.2.0
+- Added redis support
+- Changed the API
+- Updated documentation with the new API sintax
 ### 0.1.1
 - Added node-mongodb-native as a project dependency
 ### 0.1.0
