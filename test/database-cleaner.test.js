@@ -1,5 +1,6 @@
 var testCase = require('nodeunit').testCase,
-    databaseCleaner = require('lib/database-cleaner');
+    DatabaseCleaner = require('lib/database-cleaner'),
+    databaseCleaner = new DatabaseCleaner('mongodb');
 var mongoose = require('mongoose');
 
 module.exports = testCase({
@@ -42,7 +43,6 @@ module.exports = testCase({
     databaseCleaner.clean(db, function () {
       db.collection('system.indexes', function (skip, collection) {
         collection.count({}, function (err, count) {
-          console.log("system.indexes count:" + count);
           test.ok(count > 0);
           test.done();
         });
