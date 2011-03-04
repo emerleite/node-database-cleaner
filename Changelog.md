@@ -1,3 +1,5 @@
+### 0.3.0
+- Added couchdb support usign cradle (http://cloudhead.io/cradle)
 ### 0.2.0
 - Added redis support
 - Changed the API

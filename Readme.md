@@ -12,12 +12,14 @@ Dependencies
 * Node 0.2.x+
 * node-mongodb-native (a.k.a mongodb)
 * redis
+* cradle for couchdb (<http://cloudhead.io/cradle>)
 
 ### Development/Tests
 * nodeunit
 * mongoose
 * hredis
 * redis
+* cradle
 
 Instalation
 -----------
@@ -26,7 +28,7 @@ Instalation
 Usuage
 ------
 > var DatabaseCleaner = require('database-cleaner');
-> var databaseCleaner = new DatabaseCleaner(type); //type = 'mongodb|redis'
+> var databaseCleaner = new DatabaseCleaner(type); //type = 'mongodb|redis|couchdb'
 >
 > databaseCleaner.clean(database, callback);
 
@@ -39,6 +41,8 @@ Running tests
 -------------
 $ nodeunit test
 
+> For tests you need each database running (mongodb, redis, couchdb)
+
 To-Do
 -----
 * see (<https://github.com/emerleite/node-database-cleaner/issues>)
@@ -46,7 +50,7 @@ To-Do
 Author
 ------
 
-* Emerson Macedo (<http://codificando.com/>)
+* Emerson Macedo (<http://codificando.com/> and <http://nodecasts.org>)
 
 License:
 --------
