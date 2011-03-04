@@ -5,6 +5,12 @@ The simplest way to clean your database. Removes all data. Starting only with mo
 Say you're doing test cases. How can you clean up your data after each
 test run? With Database Cleaner you can simply do it with one line of code.
 
+Supported Databases
+-------------------
+* MongoDB
+* Redis
+* CouchDB
+
 Dependencies
 ------------
 
