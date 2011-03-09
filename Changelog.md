@@ -1,3 +1,5 @@
+### 0.3.2
+- Using index.js as main in package.json. This is a standard in npm
 ### 0.3.1
 - Updated package.json to work with npm >= 0.3 (Zach Smith - https://github.com/xcoderzach)
 ### 0.3.0
