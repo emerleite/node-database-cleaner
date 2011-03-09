@@ -1,3 +1,5 @@
+### 0.3.1
+- Updated package.json to work with npm >= 0.3 (Zach Smith - https://github.com/xcoderzach)
 ### 0.3.0
 - Added couchdb support usign cradle (http://cloudhead.io/cradle)
 ### 0.2.0
