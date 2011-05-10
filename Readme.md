@@ -45,9 +45,12 @@ A full example can be found at (<https://github.com/emerleite/node-rating/blob/m
 
 Running tests
 -------------
+To run tests you will need to install with --dev to install nodeunit or install node unit manually. Then, you can run the following command:
+
 $ nodeunit test
 
 > For tests you need each database running (mongodb, redis, couchdb)
+> Or run once. Ex: nodeunit test/redis.test.js
 
 To-Do
 -----

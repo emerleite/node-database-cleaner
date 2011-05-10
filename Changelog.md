@@ -1,3 +1,5 @@
+### 0.3.3
+- Added dependencies and dev dependencies
 ### 0.3.2
 - Using index.js as main in package.json. This is a standard in npm
 ### 0.3.1
