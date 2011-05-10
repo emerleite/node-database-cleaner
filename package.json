@@ -1,10 +1,21 @@
-{ "name" : "database-cleaner"
-, "description" : "Database Cleaner for node.js"
-, "keywords" : [ "database", "cleaner", "mongodb", "redis", "couchdb", "tests", "package.json" ]
-, "version" : "0.3.2"
-, "author" : "Emerson Macedo <emerleite@gmail.com>"
-, "repository" : { "type" : "git"
-                 , "url" : "git://github.com/emerleite/node-database-cleaner.git" }
-, "main": "index"
-, "engines" : { "node" : ">=0.2.5" }
+{ 
+  "name" : "database-cleaner",
+  "description" : "Database Cleaner for node.js",
+  "keywords" : [ "database", "cleaner", "mongodb", "redis", "couchdb", "tests", "package.json" ],
+  "version" : "0.3.2",
+  "author" : "Emerson Macedo <emerleite@gmail.com>",
+  "repository" : { 
+    "type" : "git",
+    "url" : "git://github.com/emerleite/node-database-cleaner.git" 
+  },
+  "dependencies" : {
+    "mongoose" : "1.0.10",
+    "redis" : ">=0.5.7",
+    "cradle" : ">=0.5.x" 
+  },
+  "devDependencies" : {
+    "nodeunit" : "*"
+  },
+  "main": "index",
+  "engines" : { "node" : ">=0.2.5" }
 }
