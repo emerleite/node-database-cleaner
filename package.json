@@ -11,7 +11,8 @@
   "dependencies" : {
     "mongoose" : "1.0.10",
     "redis" : ">=0.5.7",
-    "cradle" : ">=0.5.x" 
+    "cradle" : ">=0.5.x",
+    "mysql" : ">=0.9.0"
   },
   "devDependencies" : {
     "nodeunit" : "*"
