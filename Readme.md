@@ -10,6 +10,7 @@ Supported Databases
 * MongoDB
 * Redis
 * CouchDB
+* MySQL
 
 Dependencies
 ------------
@@ -19,6 +20,7 @@ Dependencies
 * node-mongodb-native (a.k.a mongodb)
 * redis
 * cradle for couchdb (<http://cloudhead.io/cradle>)
+* mysql server
 
 ### Development/Tests
 * nodeunit
@@ -26,6 +28,7 @@ Dependencies
 * hredis
 * redis
 * cradle
+* mysql
 
 Instalation
 -----------
