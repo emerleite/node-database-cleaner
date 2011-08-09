@@ -1,15 +1,23 @@
 var testCase = require('nodeunit').testCase,
     DatabaseCleaner = require('lib/database-cleaner'),
     databaseCleaner = new DatabaseCleaner('mysql');
-var Client = require('mysql').Client,
+    
+var mysql = require('mysql'), 
+    Client = mysql.Client,
     client = new Client();
 
 module.exports = testCase({
   setUp: function (callback) {
-    client.user = 'database_cleaner';
-    client.password = 'database_cleaner';
-    client.connect();
+    client.user = 'root';
+    client.password = '';
+    client.query('CREATE DATABASE database_cleaner', function(err) {
+      if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
+         throw err;
+      }
+    });
+
     client.useDatabase('database_cleaner');
+
     client.query('CREATE TABLE test1 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
       client.query('CREATE TABLE test2 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
         client.query('INSERT INTO test1(title) VALUES(?)', ["foobar"], function() {
