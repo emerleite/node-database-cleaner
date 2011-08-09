@@ -1,3 +1,5 @@
+### 0.4.0
+- Mysql Support (Dai Akatsuka - https://github.com/dakatsuka)
 ### 0.3.3
 - Added dependencies and dev dependencies
 ### 0.3.2
