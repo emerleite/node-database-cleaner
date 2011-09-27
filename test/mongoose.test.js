@@ -1,50 +1,55 @@
 var testCase = require('nodeunit').testCase,
-    DatabaseCleaner = require('lib/database-cleaner'),
-    databaseCleaner = new DatabaseCleaner('mongodb');
-var mongoose = require('mongoose');
+    DatabaseCleaner = require('../lib/database-cleaner'),
+    databaseCleaner = new DatabaseCleaner('mongodb'),
+    connect = require('mongodb').connect;
 
-module.exports = testCase({
-  setUp: function (callback) {
-    this.connection = mongoose.createConnection('mongodb://localhost/database_cleaner');
-    this.connection.db.createCollection("database_cleaner_collection", null, function (err, collection) {
+function setUp(callback) {
+  connect('mongodb://localhost/database_cleaner', function(err, db) {
+    db.createCollection("database_cleaner_collection", null, function (err, collection) {
       collection.insertAll([{a:1}, {b:2}], function() {
-        callback();
+        callback(db);
       });
     });
-  },
-  tearDown: function (callback) {
-    this.connection.close();
-    this.connection = null;
-    callback();
-  },
+  });
+}
+
+function tearDown(db) {
+  db.close();  
+}
+
+module.exports = testCase({
   'should delete all collections items': function(test) {
-    var db = this.connection.db;
-    databaseCleaner.clean(db, function () {
-      db.collections( function (skip, collections) {
-        var total_collections = collections.length;
-        collections.forEach(function (collection) {
-          if (collection.collectionName != 'system.indexes') {
-            collection.count({}, function (err, count) {
-              test.equal(count, 0);
-              total_collections--;
-              if (total_collections <= 0) {
-                test.done();
-              }
-            });
-          } else { 
-            total_collections--; 
-          }
+    setUp(function(db) {
+      databaseCleaner.clean(db, function () {
+        db.collections( function (skip, collections) {
+          var total_collections = collections.length;
+          collections.forEach(function (collection) {
+            if (collection.collectionName != 'system.indexes') {
+              collection.count({}, function (err, count) {
+                test.equal(count, 0);
+                total_collections--;
+                if (total_collections <= 0) {
+                  test.done();
+                  tearDown(db);
+                }
+              });
+            } else { 
+              total_collections--; 
+            }
+          });
         });
       });
     });
   },
   'should not delete system.indexes collection': function(test) {
-    var db = this.connection.db;
-    databaseCleaner.clean(db, function () {
-      db.collection('system.indexes', function (skip, collection) {
-        collection.count({}, function (err, count) {
-          test.ok(count > 0);
-          test.done();
+    setUp(function(db) {
+      databaseCleaner.clean(db, function () {
+        db.collection('system.indexes', function (skip, collection) {
+          collection.count({}, function (err, count) {
+            test.ok(count > 0);
+            test.done();
+            tearDown(db);
+          });
         });
       });
     });
