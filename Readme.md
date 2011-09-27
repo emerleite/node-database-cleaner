@@ -16,7 +16,7 @@ Dependencies
 ------------
 
 ### Runtime
-* Node 0.2.x+
+* Node 0.4.x+
 * node-mongodb-native (a.k.a mongodb)
 * redis
 * cradle for couchdb (<http://cloudhead.io/cradle>)
@@ -24,7 +24,6 @@ Dependencies
 
 ### Development/Tests
 * nodeunit
-* mongoose
 * hredis
 * redis
 * cradle
