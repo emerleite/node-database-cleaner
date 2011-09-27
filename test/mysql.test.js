@@ -31,6 +31,7 @@ module.exports = testCase({
   tearDown: function (callback) {
     client.query("DROP TABLE test1", function() {
       client.query("DROP TABLE test2", function() {
+        client.end();
         callback();
       });
     });
