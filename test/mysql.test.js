@@ -1,5 +1,5 @@
 var testCase = require('nodeunit').testCase,
-    DatabaseCleaner = require('lib/database-cleaner'),
+    DatabaseCleaner = require('../lib/database-cleaner'),
     databaseCleaner = new DatabaseCleaner('mysql');
     
 var mysql = require('mysql'), 
