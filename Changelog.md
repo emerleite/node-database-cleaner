@@ -1,3 +1,8 @@
+0.5.0 / 2011-09-28
+==================
+  * Removed mongoose dependency and using only mongodb native driver
+  * Fixed mongodb driver update - Issue #9
+
 0.4.0 / 2011-08-08
 ==================
 
