@@ -6,6 +6,7 @@ var redis = require('redis');
 module.exports = testCase({
   setUp: function (callback) {
     this.client = redis.createClient();
+    this.client.select("1");
     this.client.mset("name", "emerson", "email", "emerleite@gmail.com", "site", "codificando.com", "github", "github.com/emerleite", function (err, results) {
       callback();
     });
