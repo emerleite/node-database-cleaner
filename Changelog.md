@@ -1,3 +1,10 @@
+0.6.0 / 2011-11-05
+==================
+  * Node.JS 0.6.0 compatibility - Issue #10
+  * Fixed nodeunit dependency version
+  * Using database 1 for redis tests to not screw up user database
+  * Added a test script to not require user install nodeunit globaly
+
 0.5.0 / 2011-09-28
 ==================
   * Removed mongoose dependency and using only mongodb native driver
