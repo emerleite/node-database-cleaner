@@ -11,7 +11,7 @@ module.exports = testCase({
     });
   },
   tearDown: function (callback) {
-    this.client.quit();
+    this.client.end();
     this.client = null;
     callback();
   },
