@@ -23,7 +23,8 @@ Dependencies
 * mysql server
 
 ### Development/Tests
-* nodeunit
+* mocha
+* should
 * hredis
 * redis
 * cradle
@@ -49,12 +50,13 @@ Running tests
 -------------
 There is some ways to run tests:
 
-$ nodeunit test (you need nodeunit globaly installed. *npm install -g nodeunit*)
+$ mocha test (you need nodeunit globaly installed. *npm install -g mocha*)
 $ npm test
-$ ./run-tests.js
 
 > For tests you need each database running (mongodb, redis, couchdb, mysql)
-> Or run once. Ex: nodeunit test/redis.test.js
+> Or run once. Ex: mocha test/redis.test.js
+
+You can also run tests using local mocha. ./node_modules/mocha/bin/mocha
 
 To-Do
 -----
