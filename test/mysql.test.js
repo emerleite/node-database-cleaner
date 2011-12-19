@@ -8,8 +8,6 @@ var mysql = require('mysql'),
 
 describe('mysql', function() {
   beforeEach(function(done) {
-    client.user = 'root';
-    client.password = '';
     client.query('CREATE DATABASE database_cleaner', function(err) {
       if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
          throw err;
