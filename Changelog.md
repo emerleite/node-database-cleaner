@@ -1,3 +1,8 @@
+0.6.1 / 2011-12-18
+==================
+  * rewrited all tests using mocha
+  * removed nodeunit dependency (not used anymore)
+
 0.6.0 / 2011-11-05
 ==================
   * Node.JS 0.6.0 compatibility - Issue #10
