@@ -1,4 +1,4 @@
-var testCase = require('nodeunit').testCase,
+var should = require('should'),
     DatabaseCleaner = require('../lib/database-cleaner'),
     databaseCleaner = new DatabaseCleaner('mongodb'),
     connect = require('mongodb').connect;
@@ -17,8 +17,8 @@ function tearDown(db) {
   db.close();  
 }
 
-module.exports = testCase({
-  'should delete all collections items': function(test) {
+describe('mongodb', function() {
+  it('should delete all collections items', function(done) {
     setUp(function(db) {
       databaseCleaner.clean(db, function () {
         db.collections( function (skip, collections) {
@@ -26,11 +26,11 @@ module.exports = testCase({
           collections.forEach(function (collection) {
             if (collection.collectionName != 'system.indexes') {
               collection.count({}, function (err, count) {
-                test.equal(count, 0);
+                count.should.equal(0);
                 total_collections--;
                 if (total_collections <= 0) {
-                  test.done();
                   tearDown(db);
+                  done();
                 }
               });
             } else { 
@@ -40,18 +40,20 @@ module.exports = testCase({
         });
       });
     });
-  },
-  'should not delete system.indexes collection': function(test) {
+  });
+
+  it('should not delete system.indexes collection', function(done) {
     setUp(function(db) {
       databaseCleaner.clean(db, function () {
         db.collection('system.indexes', function (skip, collection) {
           collection.count({}, function (err, count) {
-            test.ok(count > 0);
-            test.done();
+            (count > 0).should.be.true;
+            done();
             tearDown(db);
           });
         });
       });
     });
-  }
+  });
+
 });
