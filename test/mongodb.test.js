@@ -47,7 +47,7 @@ describe('mongodb', function() {
       databaseCleaner.clean(db, function () {
         db.collection('system.indexes', function (skip, collection) {
           collection.count({}, function (err, count) {
-            (count > 0).should.be.true;
+            (count == 0).should.be.true;
             done();
             tearDown(db);
           });
