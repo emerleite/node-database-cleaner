@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/emerleite/node-database-cleaner.png)](http://travis-ci.org/emerleite/node-database-cleaner)
+
 Node.js Database Cleaner
 ========================
 The simplest way to clean your database. Removes all data. Starting only with mongodb, but will support mainstream databases.
