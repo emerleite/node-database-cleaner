@@ -44,9 +44,9 @@ Usuage
 > databaseCleaner.clean(database, callback);
 
 ### Examples
-Take look at test folder to see how it works
+Take look at test folder to see how it works.
 
-A full example can be found at (<https://github.com/emerleite/node-rating/blob/master/test/hit.test.js>)
+Look at examples dir.
 
 Running tests
 -------------
