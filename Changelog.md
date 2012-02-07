@@ -3,6 +3,7 @@
   * Remove system.indexes during cleanner - Issue #13 (mongodb)
   * Invoke callback even if empty collection - Bug #14 and #15 (mongodb)
   * Mongodb usage example at examples dir
+  * Updated mongodb, cradle, mysql and redis pkg versions
 
 0.6.1 / 2011-12-18
 ==================

@@ -6,7 +6,7 @@ var should = require('should'),
 function setUp(callback) {
   connect('mongodb://localhost/database_cleaner', function(err, db) {
     db.createCollection("database_cleaner_collection", null, function (err, collection) {
-      collection.insertAll([{a:1}, {b:2}], function() {
+      collection.insert([{a:1}, {b:2}], function() {
         callback(db);
       });
     });
