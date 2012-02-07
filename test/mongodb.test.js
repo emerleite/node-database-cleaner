@@ -13,6 +13,12 @@ function setUp(callback) {
   });
 }
 
+function setUpEmptyDb(callback) {
+  connect('mongodb://localhost/database_cleaner_empty', function(err, db) {
+    callback(db);
+  });
+}
+
 function tearDown(db) {
   db.close();  
 }
@@ -38,6 +44,14 @@ describe('mongodb', function() {
             }
           });
         });
+      });
+    });
+  });
+
+  it('should invoke callback even if database has no collections', function(done) {
+    setUpEmptyDb(function(db) {
+      databaseCleaner.clean(db, function () {
+        done();
       });
     });
   });
