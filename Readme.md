@@ -36,7 +36,7 @@ Instalation
 -----------
 > npm install database-cleaner 
 
-Usuage
+Usage
 ------
 > var DatabaseCleaner = require('database-cleaner');
 > var databaseCleaner = new DatabaseCleaner(type); //type = 'mongodb|redis|couchdb'
