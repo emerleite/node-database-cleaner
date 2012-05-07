@@ -34,14 +34,18 @@ Dependencies
 
 Instalation
 -----------
-> npm install database-cleaner 
+```shell
+$ npm install database-cleaner 
+```
 
-Usuage
+Usage
 ------
-> var DatabaseCleaner = require('database-cleaner');
-> var databaseCleaner = new DatabaseCleaner(type); //type = 'mongodb|redis|couchdb'
->
-> databaseCleaner.clean(database, callback);
+```javascript
+var DatabaseCleaner = require('database-cleaner');
+var databaseCleaner = new DatabaseCleaner(type); //type = 'mongodb|redis|couchdb'
+
+databaseCleaner.clean(database, callback);
+```
 
 ### Examples
 Take look at test folder to see how it works.
@@ -52,11 +56,13 @@ Running tests
 -------------
 There is some ways to run tests:
 
-$ mocha test (you need nodeunit globaly installed. *npm install -g mocha*)
+```shell
+$ mocha test # you need mocha globaly installed. `npm install -g mocha`
 $ npm test
+```
 
-> For tests you need each database running (mongodb, redis, couchdb, mysql)
-> Or run once. Ex: mocha test/redis.test.js
+For tests you need each database running (mongodb, redis, couchdb, mysql)
+Or run once. Ex: `mocha test/redis.test.js`
 
 You can also run tests using local mocha. ./node_modules/mocha/bin/mocha
 
