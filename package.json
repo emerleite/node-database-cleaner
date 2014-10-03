@@ -1,26 +1,26 @@
-{ 
+{
   "name" : "database-cleaner",
   "description" : "Database Cleaner for node.js",
   "keywords" : [ "database", "cleaner", "mongodb", "redis", "couchdb", "tests", "package.json" ],
-  "version" : "0.7.0",
+  "version" : "0.8.0",
   "author" : "Emerson Macedo <emerleite@gmail.com>",
-  "repository" : { 
+  "repository" : {
     "type" : "git",
-    "url" : "git://github.com/emerleite/node-database-cleaner.git" 
+    "url" : "git://github.com/emerleite/node-database-cleaner.git"
   },
   "dependencies" : {
-    "mongodb" : "0.9.8-7",
-    "redis" : "0.7.1",
+    "mongodb" : "1.4.18",
+    "redis" : "0.12.1",
     "cradle" : "0.5.8",
     "mysql" : "0.9.5"
   },
   "devDependencies" : {
-    "mocha" : "0.7.0",
-    "should" : "0.4.2"
+    "mocha" : "1.21.4",
+    "should" : "4.0.4"
   },
   "main": "index",
   "scripts": {
     "test": "node_modules/mocha/bin/mocha -R spec --globals config,currentObjectStored"
   },
-  "engines" : { "node" : ">=0.4.0" }
+  "engines" : { "node" : ">=0.8.0" }
 }

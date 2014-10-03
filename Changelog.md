@@ -1,3 +1,9 @@
+0.8.0 / 2014-12-18
+==================
+
+  * DatabaseCleanner global leak fixed.
+  * Supports only node >= 0.8.0
+
 0.7.0 / 2011-12-18
 ==================
   * Remove system.indexes during cleanner - Issue #13 (mongodb)
@@ -66,4 +72,3 @@
   * Clean all databases but system.indexes
   * Basic test structure
   * Initial documentation
-
