@@ -35,7 +35,7 @@ Dependencies
 Instalation
 -----------
 ```shell
-$ npm install database-cleaner 
+$ npm install database-cleaner
 ```
 
 Usage
@@ -65,6 +65,15 @@ For tests you need each database running (mongodb, redis, couchdb, mysql)
 Or run once. Ex: `mocha test/redis.test.js`
 
 You can also run tests using local mocha. ./node_modules/mocha/bin/mocha
+
+MySQL
+-----
+
+To run mysql tests you need to have a database_cleaner database.
+
+```
+mysql -u root -e 'create database database_cleaner;'
+```
 
 To-Do
 -----
