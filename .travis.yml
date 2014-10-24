@@ -7,6 +7,8 @@ services:
   - redis
   - couchdb
   - mysql
+  - postgresql
 before_script:
   - curl -X PUT localhost:5984/database_cleaner
   - mysql -e 'create database database_cleaner;'
+  - createdb database_cleaner
