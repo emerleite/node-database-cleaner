@@ -2,7 +2,7 @@
 
 Node.js Database Cleaner
 ========================
-The simplest way to clean your database. Removes all data. Starting only with mongodb, but will support mainstream databases.
+The simplest way to clean your database. 
 
 Say you're doing test cases. How can you clean up your data after each
 test run? With Database Cleaner you can simply do it with one line of code.
@@ -13,16 +13,18 @@ Supported Databases
 * Redis
 * CouchDB
 * MySQL
+* Postgres
 
 Dependencies
 ------------
 
 ### Runtime
-* Node 0.4.x+
+* Node 0.8.x+
 * node-mongodb-native (a.k.a mongodb)
 * redis
 * cradle for couchdb (<http://cloudhead.io/cradle>)
 * mysql server
+* postgres server
 
 ### Development/Tests
 * mocha
@@ -31,6 +33,7 @@ Dependencies
 * redis
 * cradle
 * mysql
+* pg
 
 Instalation
 -----------
@@ -73,6 +76,15 @@ To run mysql tests you need to have a database_cleaner database.
 
 ```
 mysql -u root -e 'create database database_cleaner;'
+```
+
+Postgres
+--------
+
+To run postgres tests you need to have a database_cleaner database.
+
+```
+createdb database_cleaner
 ```
 
 To-Do
