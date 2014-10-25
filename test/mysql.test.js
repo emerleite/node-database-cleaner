@@ -4,6 +4,7 @@ var should = require('should'),
 
 var mysql = require('mysql'),
     client = new mysql.createConnection({
+      host: process.env.MYSQL_HOST || 'localhost',
       user: 'root',
       database: 'database_cleaner',
     });

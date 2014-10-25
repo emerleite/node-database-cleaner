@@ -2,7 +2,7 @@ var should = require('should'),
     DatabaseCleaner = require('../lib/database-cleaner'),
     databaseCleaner = new DatabaseCleaner('couchdb'),
     cradle = require('cradle'),
-    db = new(cradle.Connection)().database('database_cleaner');;
+    db = new(cradle.Connection)(process.env.COUCHDB_HOST || '127.0.0.1').database('database_cleaner');;
 
 describe('couchdb', function() {
   beforeEach(function(done) {
