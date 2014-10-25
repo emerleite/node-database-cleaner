@@ -2,7 +2,10 @@ var should = require('should'),
     DatabaseCleaner = require('../lib/database-cleaner'),
     databaseCleaner = new DatabaseCleaner('postgresql');
 
-var connectionString = "postgres://postgres@localhost/database_cleaner";
+
+var dbHost = process.env.POSTGRES_HOST || 'localhost';
+
+var connectionString = 'postgres://postgres@' + dbHost  + '/database_cleaner';
 
 var pg = require('pg');
 
