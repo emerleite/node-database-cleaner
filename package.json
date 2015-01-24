@@ -9,15 +9,15 @@
     "url" : "git://github.com/emerleite/node-database-cleaner.git"
   },
   "dependencies" : {
+  },
+  "devDependencies" : {
+    "mocha" : "1.21.4",
+    "should" : "4.0.4",
     "mongodb" : "1.4.18",
     "redis" : "0.12.1",
     "cradle" : "0.5.8",
     "mysql" : "2.5.1",
     "pg": "3.4.2"
-  },
-  "devDependencies" : {
-    "mocha" : "1.21.4",
-    "should" : "4.0.4"
   },
   "main": "index",
   "scripts": {
