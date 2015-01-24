@@ -1,4 +1,15 @@
-0.8.0 / 2014-12-18
+0.9.1 / 2014-01-24
+==================
+
+  * Moved all dependencies to devDependencies because you only need than on test environment. Closes issues #20 and #21.
+
+0.9.0 / 2014-10-25
+==================
+
+  * Postgres support
+  * Added POSTGRES_HOST, MYSQL_HOST and COUCHDB_HOST to allow use another ip than localhost when testing.
+
+0.8.0 / 2014-10-03
 ==================
 
   * DatabaseCleanner global leak fixed.
