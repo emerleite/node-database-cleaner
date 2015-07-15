@@ -3,8 +3,10 @@ var should = require('should'),
     databaseCleaner = new DatabaseCleaner('mongodb'),
     connect = require('mongodb').connect;
 
+var dbHost = process.env.MONGO_HOST || 'localhost';
+
 function setUp(callback) {
-  connect('mongodb://localhost/database_cleaner', function(err, db) {
+  connect('mongodb://' + dbHost + '/database_cleaner', function(err, db) {
     db.createCollection("database_cleaner_collection", null, function (err, collection) {
       collection.insert([{a:1}, {b:2}], function() {
         callback(db);
@@ -14,7 +16,7 @@ function setUp(callback) {
 }
 
 function setUpEmptyDb(callback) {
-  connect('mongodb://localhost/database_cleaner_empty', function(err, db) {
+  connect('mongodb://' + dbHost + '/database_cleaner_empty', function(err, db) {
     callback(db);
   });
 }
