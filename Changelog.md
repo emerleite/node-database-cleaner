@@ -1,3 +1,9 @@
+0.9.2 / 2015-07-15
+==================
+
+  * MySQL cleanner. Issue #25
+  * Postgres: quote database table name when delete data, fixed an issue when table name is capitalized. Pull Request #23
+
 0.9.1 / 2014-01-24
 ==================
 
