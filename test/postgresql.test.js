@@ -27,10 +27,14 @@ describe('pg', function() {
 
       client.query('CREATE TABLE test1 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
         client.query('CREATE TABLE test2 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
-          client.query('INSERT INTO test1 (title) VALUES ($1);', ["foobar"], function() {
-            client.query('INSERT INTO test2 (title) VALUES ($1);', ["foobar"], function() {
-              done();
-              _done();
+          client.query('CREATE TABLE \"Test3\" (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
+            client.query('INSERT INTO test1 (title) VALUES ($1);', ["foobar"], function() {
+              client.query('INSERT INTO test2 (title) VALUES ($1);', ["foobar"], function() {
+                client.query('INSERT INTO \"Test3\" (title) VALUES ($1);', ["foobar"], function() {
+                  done();
+                  _done();
+                });
+              });
             });
           });
         });
@@ -45,8 +49,10 @@ describe('pg', function() {
     pg.connect(connectionString, function(err, client, done) {
       client.query("DROP TABLE test1", function() {
         client.query("DROP TABLE test2", function() {
-          done();
-          _done();
+          client.query("DROP TABLE \"Test3\"", function() {
+            done();
+            _done();
+          });
         });
       });
     });
@@ -63,6 +69,26 @@ describe('pg', function() {
             result_test2.rows.length.should.equal(0);
             done();
             _done();
+          });
+        });
+      });
+    });
+  });
+
+  it('should delete all records when table name is capitalized', function(done) {
+    _done = done;
+
+    pg.connect(connectionString, function(err, client, done) {
+      databaseCleaner.clean(client, function() {
+        client.query("SELECT * FROM test1", function(err, result_test1) {
+          client.query("SELECT * FROM test2", function(err, result_test2) {
+            client.query("SELECT * FROM \"Test3\"", function(err, result_test3) {
+              result_test1.rows.length.should.equal(0);
+              result_test2.rows.length.should.equal(0);
+              result_test3.rows.length.should.equal(0);
+              done();
+              _done();
+            });
           });
         });
       });
