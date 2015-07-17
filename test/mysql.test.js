@@ -20,23 +20,27 @@ describe('mysql', function() {
     client.query('CREATE TABLE test1 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
       client.query('CREATE TABLE test2 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
         client.query('INSERT INTO test1(title) VALUES(?)', ["foobar"], function() {
-          client.query('INSERT INTO test2(title) VALUES(?)', ["foobar"], done);
+          client.query('INSERT INTO test2(title) VALUES(?)', ["foobar"], function() {
+            client.query('CREATE TABLE schema_migrations (id INTEGER NOT NULL AUTO_INCREMENT, version VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
+              client.query('INSERT INTO schema_migrations(version) VALUES(?)', ["20150716190240"], done);
+            });
+          });
         });
       });
     });
-
   });
 
   afterEach(function(done) {
     client.query("DROP TABLE test1", function() {
       client.query("DROP TABLE test2", function() {
-        client.end();
-        done();
+        client.query("DROP TABLE schema_migrations", function() {
+          done();
+        })
       });
     });
   });
 
-  it('should delete all records', function(done) {
+  it('should delete all not skippedTables records', function(done) {
     databaseCleaner.clean(client, function() {
       client.query("SELECT * FROM test1", function(err, result_test1) {
         client.query("SELECT * FROM test2", function(err, result_test2) {
@@ -48,4 +52,12 @@ describe('mysql', function() {
     });
   });
 
+  it('should retain schema_migrations', function(done) {
+    databaseCleaner.clean(client, function() {
+      client.query("SELECT * FROM schema_migrations", function(err, result) {
+        result.length.should.equal(1);
+        done();
+      });
+    });
+  });
 });
