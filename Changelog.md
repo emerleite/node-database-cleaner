@@ -1,3 +1,8 @@
+0.10.0 / 2015-07-20
+==================
+
+  * Allow skip tables during tests. Supports MySQL and Postgres
+
 0.9.2 / 2015-07-15
 ==================
 
