@@ -28,11 +28,15 @@ describe('pg', function() {
       client.query('CREATE TABLE test1 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
         client.query('CREATE TABLE test2 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
           client.query('CREATE TABLE \"Test3\" (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
-            client.query('INSERT INTO test1 (title) VALUES ($1);', ["foobar"], function() {
-              client.query('INSERT INTO test2 (title) VALUES ($1);', ["foobar"], function() {
-                client.query('INSERT INTO \"Test3\" (title) VALUES ($1);', ["foobar"], function() {
-                  done();
-                  _done();
+            client.query('CREATE TABLE schema_migrations (id SERIAL, version VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
+              client.query('INSERT INTO test1 (title) VALUES ($1);', ["foobar"], function() {
+                client.query('INSERT INTO test2 (title) VALUES ($1);', ["foobar"], function() {
+                  client.query('INSERT INTO \"Test3\" (title) VALUES ($1);', ["foobar"], function() {
+                    client.query('INSERT INTO schema_migrations (version) VALUES ($1);', ["20150716190240"], function() {
+                      done();
+                      _done();
+                    });
+                  });
                 });
               });
             });
@@ -40,7 +44,6 @@ describe('pg', function() {
         });
       });
     });
-
   });
 
   afterEach(function(done) {
@@ -50,15 +53,17 @@ describe('pg', function() {
       client.query("DROP TABLE test1", function() {
         client.query("DROP TABLE test2", function() {
           client.query("DROP TABLE \"Test3\"", function() {
-            done();
-            _done();
+            client.query("DROP TABLE schema_migrations", function() {
+              done();
+              _done();
+            });
           });
         });
       });
     });
   });
 
-  it('should delete all records', function(done) {
+  it('should delete all non skippedTable records', function(done) {
     _done = done;
 
     pg.connect(connectionString, function(err, client, done) {
@@ -95,4 +100,17 @@ describe('pg', function() {
     });
   });
 
+  it('should retain schema_migrations', function(done) {
+    _done = done;
+
+    pg.connect(connectionString, function(err, client, done) {
+      databaseCleaner.clean(client, function() {
+        client.query("SELECT * FROM schema_migrations", function(err, result) {
+          result.rows.length.should.equal(1);
+          done();
+          _done();
+        });
+      });
+    });
+  });
 });
