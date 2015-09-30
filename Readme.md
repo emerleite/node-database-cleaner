@@ -53,7 +53,7 @@ databaseCleaner.clean(database, callback);
 
 Config
 ------
-By default it attempt to load the config/cleaner-config.js file and will fall back to the [default config](https://github.com/emerleite/node-database-cleaner/blob/master/config/cleaner-config.js).
+By default it attempts to load the config/cleaner-config.js file and will fall back to the [default config](https://github.com/emerleite/node-database-cleaner/blob/master/config/cleaner-config.js).
 
 ### Examples
 Take look at test folder to see how it works.
