@@ -1,3 +1,8 @@
+0.10.1 / 2015-10-09
+==================
+
+  * Fix: Config can be relative to executing dir. Closes #31 (knappe)
+
 0.10.0 / 2015-07-20
 ==================
 
