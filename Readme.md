@@ -50,6 +50,11 @@ var databaseCleaner = new DatabaseCleaner(type); //type = 'mongodb|redis|couchdb
 databaseCleaner.clean(database, callback);
 ```
 
+
+Config
+------
+By default it attempts to load the config/cleaner-config.js file and will fall back to the [default config](https://github.com/emerleite/node-database-cleaner/blob/master/config/cleaner-config.js).
+
 ### Examples
 Take look at test folder to see how it works.
 
