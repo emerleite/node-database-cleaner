@@ -9,7 +9,7 @@ var mysql = require('mysql'),
       database: 'database_cleaner',
     });
 
-describe.only('mysql', function() {
+describe('mysql', function() {
   beforeEach(function(done) {
     client.query('CREATE DATABASE database_cleaner', function(err) {
       if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
@@ -59,5 +59,20 @@ describe.only('mysql', function() {
         done();
       });
     });
+  });
+});
+
+describe('mysql empty', function() {
+   beforeEach(function(done) {
+    client.query('CREATE DATABASE database_cleaner', function(err) {
+      if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
+        throw err;
+      }
+      done();
+    });
+  });
+
+  it('should not stuck if database is empty', function(done) {
+    databaseCleaner.clean(client, done);
   });
 });
