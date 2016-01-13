@@ -6,14 +6,14 @@ var mysql = require('mysql'),
     client = new mysql.createConnection({
       host: process.env.MYSQL_HOST || 'localhost',
       user: 'root',
-      database: 'database_cleaner'
+      database: 'database_cleaner',
     });
 
 describe('mysql', function() {
   beforeEach(function(done) {
     client.query('CREATE DATABASE database_cleaner', function(err) {
       if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
-         throw err;
+        throw err;
       }
     });
 
@@ -35,7 +35,7 @@ describe('mysql', function() {
       client.query("DROP TABLE test2", function() {
         client.query("DROP TABLE schema_migrations", function() {
           done();
-        })
+        });
       });
     });
   });
@@ -59,5 +59,20 @@ describe('mysql', function() {
         done();
       });
     });
+  });
+});
+
+describe('mysql empty', function() {
+   beforeEach(function(done) {
+    client.query('CREATE DATABASE database_cleaner', function(err) {
+      if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
+        throw err;
+      }
+      done();
+    });
+  });
+
+  it('should not stuck if database is empty', function(done) {
+    databaseCleaner.clean(client, done);
   });
 });

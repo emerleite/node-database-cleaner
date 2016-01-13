@@ -114,3 +114,35 @@ describe('pg', function() {
     });
   });
 });
+
+describe('pg empty', function() {
+  beforeEach(function(done) {
+
+    _done = done;
+
+    pg.connect(connectionString, function(err, client, done) {
+      if (err) {
+        return console.error('could not connect to postgresql', err);
+      }
+
+      client.query('CREATE DATABASE database_cleaner', function(err) {
+        if (err && err.code != '42P04') {
+          throw err;
+        }
+        done();
+        _done();
+      });
+    });
+  });
+
+  it('should not struck if db is empty', function(done) {
+    _done = done;
+
+    pg.connect(connectionString, function(err, client, done) {
+      databaseCleaner.clean(client, function() {
+        done();
+        _done();
+      });
+    });
+  });
+});
