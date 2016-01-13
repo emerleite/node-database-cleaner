@@ -1,6 +1,8 @@
 var should = require('should'),
     DatabaseCleaner = require('../lib/database-cleaner'),
-    databaseCleaner = new DatabaseCleaner('mysql');
+    _ = require('lodash'),
+    async = require('async'),
+    databaseCleaner;
 
 var mysql = require('mysql'),
     client = new mysql.createConnection({
@@ -8,6 +10,10 @@ var mysql = require('mysql'),
       user: 'root',
       database: 'database_cleaner'
     });
+
+var queryClient = _.curry(function(query, values, next) {
+  client.query(query, values, next);
+});
 
 describe('mysql', function() {
   beforeEach(function(done) {
@@ -17,48 +23,82 @@ describe('mysql', function() {
       }
     });
 
-    client.query('CREATE TABLE test1 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
-      client.query('CREATE TABLE test2 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
-        client.query('INSERT INTO test1(title) VALUES(?)', ["foobar"], function() {
-          client.query('INSERT INTO test2(title) VALUES(?)', ["foobar"], function() {
-            client.query('CREATE TABLE schema_migrations (id INTEGER NOT NULL AUTO_INCREMENT, version VARCHAR(255) NOT NULL, PRIMARY KEY(id));', function() {
-              client.query('INSERT INTO schema_migrations(version) VALUES(?)', ["20150716190240"], done);
-            });
-          });
-        });
-      });
-    });
+    async.series([
+      queryClient('CREATE TABLE test1 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
+      queryClient('CREATE TABLE test2 (id INTEGER NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL, PRIMARY KEY(id))', []),
+      queryClient('INSERT INTO test1(title) VALUES(?)', ["foobar"]),
+      queryClient('INSERT INTO test2(title) VALUES(?)', ["foobar"]),
+      queryClient('CREATE TABLE schema_migrations (id INTEGER NOT NULL AUTO_INCREMENT, version VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
+      queryClient('INSERT INTO schema_migrations(version) VALUES(?)', ["20150716190240"])
+    ], done);
   });
 
   afterEach(function(done) {
-    client.query("DROP TABLE test1", function() {
-      client.query("DROP TABLE test2", function() {
-        client.query("DROP TABLE schema_migrations", function() {
+    async.parallel([
+      queryClient("DROP TABLE test1", []),
+      queryClient("DROP TABLE test2", []),
+      queryClient("DROP TABLE schema_migrations", [])
+    ], done);
+  });
+
+  describe('with default config', function() {
+    before(function(done) {
+      databaseCleaner = new DatabaseCleaner('mysql');
+      done();
+    });
+
+    it('should delete all not skippedTables records', function(done) {
+      databaseCleaner.clean(client, function() {
+        async.parallel([
+          queryClient("SELECT * FROM test1", []),
+          queryClient("SELECT * FROM test2", [])
+        ], function(err, results) {
+          if (err) return done(err);
+
+          results[0][0].length.should.equal(0);
+          results[1][0].length.should.equal(0);
+
+          done();
+        });
+      });
+    });
+
+    it('should retain schema_migrations', function(done) {
+      databaseCleaner.clean(client, function() {
+        client.query("SELECT * FROM schema_migrations", function(err, result) {
+          result.length.should.equal(1);
+          done();
+        });
+      });
+    });
+
+    it('should retain schema_migrations', function(done) {
+      databaseCleaner.clean(client, function() {
+        client.query("SELECT * FROM schema_migrations", function(err, result) {
+          result.length.should.equal(1);
           done();
         });
       });
     });
   });
 
-  it('should delete all not skippedTables records', function(done) {
-    databaseCleaner.clean(client, function() {
-      client.query("SELECT * FROM test1", function(err, result_test1) {
-        client.query("SELECT * FROM test2", function(err, result_test2) {
-          result_test1.length.should.equal(0);
-          result_test2.length.should.equal(0);
+  describe('with provided config', function() {
+    before(function(done) {
+      var config = { mysql: { skipTables: [] } };
+
+      databaseCleaner = new DatabaseCleaner('mysql', config);
+      done();
+    });
+
+    it('should NOT retain schema_migrations since the config did not have any tables to skip', function(done) {
+      databaseCleaner.clean(client, function() {
+        client.query("SELECT * FROM schema_migrations", function(err, result) {
+          result.length.should.equal(0);
           done();
         });
       });
     });
-  });
 
-  it('should retain schema_migrations', function(done) {
-    databaseCleaner.clean(client, function() {
-      client.query("SELECT * FROM schema_migrations", function(err, result) {
-        result.length.should.equal(1);
-        done();
-      });
-    });
   });
 });
 
