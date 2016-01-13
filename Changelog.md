@@ -1,3 +1,9 @@
+0.11.0 / 2016-01-13
+==================
+
+  * Allow to pass the config data on initialize (gabceb)
+  * Fix: mysql/postgesql stuck if no table to clean. (Amoki)
+
 0.10.1 / 2015-10-09
 ==================
 
