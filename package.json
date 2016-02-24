@@ -2,7 +2,7 @@
   "name" : "database-cleaner",
   "description" : "Database Cleaner for node.js",
   "keywords" : [ "database", "cleaner", "mongodb", "redis", "couchdb", "tests", "package.json", "elasticsearch" ],
-  "version" : "0.11.0",
+  "version" : "0.12.0",
   "author" : "Emerson Macedo <emerleite@gmail.com>",
   "repository" : {
     "type" : "git",

@@ -1,3 +1,10 @@
+0.12.0 / 2016-02-25
+==================
+
+  * Elastic Search support (luizgpsantos)
+  * Removed version 0.8.x support (emerleite)
+  * Handle errors and pass it to the callback (gabceb)
+
 0.11.0 / 2016-01-13
 ==================
 
