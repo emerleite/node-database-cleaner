@@ -25,6 +25,6 @@
     "test": "node_modules/mocha/bin/mocha -R spec --globals config,currentObjectStored"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   }
 }
