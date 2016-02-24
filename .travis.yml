@@ -17,6 +17,7 @@ services:
   - couchdb
   - mysql
   - postgresql
+  - elasticsearch
 before_script:
   - curl -X PUT localhost:5984/database_cleaner
   - mysql -e 'create database database_cleaner;'
