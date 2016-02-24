@@ -14,6 +14,7 @@ Supported Databases
 * CouchDB
 * MySQL
 * Postgres
+* Elasticsearch
 
 Dependencies
 ------------
@@ -25,6 +26,7 @@ Dependencies
 * cradle for couchdb (<http://cloudhead.io/cradle>)
 * mysql server
 * postgres server
+* elasticsearch
 
 ### Development/Tests
 * mocha
@@ -34,6 +36,7 @@ Dependencies
 * cradle
 * mysql
 * pg
+* elasticsearch
 
 Instalation
 -----------
