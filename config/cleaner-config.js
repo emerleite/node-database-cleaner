@@ -5,5 +5,9 @@ module.exports = {
 
   postgresql: {
     skipTables: ['schema_migrations']
+  },
+
+  mongodb: {
+      skipTables: ['schema_migrations']
   }
 }

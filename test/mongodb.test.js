@@ -22,24 +22,17 @@ function setUpEmptyDb(callback) {
 }
 
 function tearDown(db) {
-  db.close();  
+  db.close();
 }
 
 describe('mongodb', function() {
-  it('should delete all collections items', function(done) {
+  it('should delete all collections except the skipped and system.indexes', function(done) {
     setUp(function(db) {
       databaseCleaner.clean(db, function () {
         db.collections( function (skip, collections) {
-          var total_collections = collections.length;
-          collections.forEach(function (collection) {
-            collection.count({}, function (err, count) {
-              count.should.equal(0);
-              if (--total_collections <= 0) {
-                tearDown(db);
-                done();
-              }
-            });
-          });
+          collections.length.should.equal(2);
+          tearDown(db);
+          done();
         });
       });
     });
@@ -49,20 +42,6 @@ describe('mongodb', function() {
     setUpEmptyDb(function(db) {
       databaseCleaner.clean(db, function () {
         done();
-      });
-    });
-  });
-
-  it('should also delete system.indexes collection', function(done) {
-    setUp(function(db) {
-      databaseCleaner.clean(db, function () {
-        db.collection('system.indexes', function (skip, collection) {
-          collection.count({}, function (err, count) {
-            (count > 0).should.be.false;
-            done();
-            tearDown(db);
-          });
-        });
       });
     });
   });
