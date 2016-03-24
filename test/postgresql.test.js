@@ -105,6 +105,34 @@ describe('pg', function() {
       });
     });
   });
+
+
+  describe('truncation strategy', function() {
+    before(function() {
+      var config = { postgresql: { strategy: 'truncation', skipTables: [] } };
+
+      databaseCleaner = new DatabaseCleaner('postgresql', config);
+    });
+
+    it('should truncate all not skippedTables records', function(done) {
+      pg.connect(connectionString, function(err, client, release) {
+        if (err) return done(err);
+
+        databaseCleaner.clean(client, function() {
+          async.parallel([
+            queryClient(client, "SELECT * FROM test1", []),
+            queryClient(client, "SELECT * FROM test2", [])
+          ], function(err, results) {
+            results[0].rows.length.should.equal(0);
+            results[1].rows.length.should.equal(0);
+
+            release();
+            done();
+          });
+        });
+      });
+    });
+  });
 });
 
 describe('pg empty', function() {
