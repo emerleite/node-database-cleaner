@@ -100,6 +100,31 @@ describe('mysql', function() {
     });
 
   });
+
+  describe('truncation strategy', function() {
+    before(function(done) {
+      var config = { mysql: { strategy: 'truncation', skipTables: [] } };
+
+      databaseCleaner = new DatabaseCleaner('mysql', config);
+      done();
+    });
+
+    it('should truncate all not skippedTables records', function(done) {
+      databaseCleaner.clean(client, function() {
+        async.parallel([
+          queryClient("SELECT * FROM test1", []),
+          queryClient("SELECT * FROM test2", [])
+        ], function(err, results) {
+          if (err) return done(err);
+
+          results[0][0].length.should.equal(0);
+          results[1][0].length.should.equal(0);
+
+          done();
+        });
+      });
+    });
+  });
 });
 
 describe('mysql empty', function() {
