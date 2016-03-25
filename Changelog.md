@@ -1,3 +1,8 @@
+0.13.0 / 2016-03-25
+==================
+
+  * Cleanup now have two strategy options. 'delete' (default) or 'truncate'. (yads)
+
 0.12.0 / 2016-02-25
 ==================
 
