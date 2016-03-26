@@ -8,6 +8,6 @@ module.exports = {
   },
 
   mongodb: {
-      skipTables: ['schema_migrations']
+      skipCollections: ['schema_migrations']
   }
 }

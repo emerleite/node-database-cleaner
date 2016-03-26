@@ -8,8 +8,10 @@ var dbHost = process.env.MONGO_HOST || 'localhost';
 function setUp(callback) {
   connect('mongodb://' + dbHost + '/database_cleaner', function(err, db) {
     db.createCollection("database_cleaner_collection", null, function (err, collection) {
-      collection.insert([{a:1}, {b:2}], function() {
-        callback(db);
+      db.createCollection("schema_migrations", null, function (err, collection) {
+        collection.insert([{a:1}, {b:2}], function() {
+          callback(db);
+        });
       });
     });
   });
@@ -45,5 +47,4 @@ describe('mongodb', function() {
       });
     });
   });
-
 });
