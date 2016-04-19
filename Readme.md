@@ -38,7 +38,7 @@ Dependencies
 * pg
 * elasticsearch
 
-Instalation
+Installation
 -----------
 ```shell
 $ npm install database-cleaner
