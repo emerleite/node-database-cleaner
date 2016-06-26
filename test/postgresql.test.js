@@ -28,8 +28,10 @@ describe('pg', function() {
         queryClient(client, 'CREATE TABLE test2 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
         queryClient(client, 'CREATE TABLE \"Test3\" (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
         queryClient(client, 'CREATE TABLE schema_migrations (id SERIAL, version VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
-        queryClient(client, 'INSERT INTO test1 (title) VALUES ($1);', ["foobar"]),
-        queryClient(client, 'INSERT INTO test2 (title) VALUES ($1);', ["foobar"]),
+        queryClient(client, 'INSERT INTO test1 (title) VALUES ($1);', ["foo"]),
+        queryClient(client, 'INSERT INTO test1 (title) VALUES ($1);', ["bar"]),
+        queryClient(client, 'INSERT INTO test2 (title) VALUES ($1);', ["foo"]),
+        queryClient(client, 'INSERT INTO test2 (title) VALUES ($1);', ["bar"]),
         queryClient(client, 'INSERT INTO \"Test3\" (title) VALUES ($1);', ["foobar"]),
         queryClient(client, 'INSERT INTO schema_migrations (version) VALUES ($1);', ["20150716190240"]),
         function(next) { release(); next(); },
@@ -121,10 +123,14 @@ describe('pg', function() {
         databaseCleaner.clean(client, function() {
           async.parallel([
             queryClient(client, "SELECT * FROM test1", []),
-            queryClient(client, "SELECT * FROM test2", [])
+            queryClient(client, "SELECT * FROM test2", []),
+            queryClient(client, "SELECT last_value FROM test1_id_seq", []),
+            queryClient(client, "SELECT last_value FROM test2_id_seq", [])
           ], function(err, results) {
             results[0].rows.length.should.equal(0);
             results[1].rows.length.should.equal(0);
+            results[2].rows[0].last_value.should.equal('1');
+            results[3].rows[0].last_value.should.equal('1');
 
             release();
             done();
