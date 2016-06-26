@@ -1,3 +1,9 @@
+1.0.0 / 2016-06-25
+==================
+
+  * Sequence reset for postgres truncation (Matheus Pedroso)
+  * Skip system.indexes when delete MongoDB collections (Kostas Bariotis)
+
 0.13.0 / 2016-03-25
 ==================
 
