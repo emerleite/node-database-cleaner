@@ -8,8 +8,10 @@ var dbHost = process.env.MONGO_HOST || 'localhost';
 function setUp(callback) {
   connect('mongodb://' + dbHost + '/database_cleaner', function(err, db) {
     db.createCollection("database_cleaner_collection", null, function (err, collection) {
-      collection.insert([{a:1}, {b:2}], function() {
-        callback(db);
+      db.createCollection("schema_migrations", null, function (err, collection) {
+        collection.insert([{a:1}, {b:2}], function() {
+          callback(db);
+        });
       });
     });
   });
@@ -22,24 +24,17 @@ function setUpEmptyDb(callback) {
 }
 
 function tearDown(db) {
-  db.close();  
+  db.close();
 }
 
 describe('mongodb', function() {
-  it('should delete all collections items', function(done) {
+  it('should delete all collections except the skipped and system.indexes', function(done) {
     setUp(function(db) {
       databaseCleaner.clean(db, function () {
         db.collections( function (skip, collections) {
-          var total_collections = collections.length;
-          collections.forEach(function (collection) {
-            collection.count({}, function (err, count) {
-              count.should.equal(0);
-              if (--total_collections <= 0) {
-                tearDown(db);
-                done();
-              }
-            });
-          });
+          collections.length.should.equal(2);
+          tearDown(db);
+          done();
         });
       });
     });
@@ -52,19 +47,4 @@ describe('mongodb', function() {
       });
     });
   });
-
-  it('should also delete system.indexes collection', function(done) {
-    setUp(function(db) {
-      databaseCleaner.clean(db, function () {
-        db.collection('system.indexes', function (skip, collection) {
-          collection.count({}, function (err, count) {
-            (count > 0).should.be.false;
-            done();
-            tearDown(db);
-          });
-        });
-      });
-    });
-  });
-
 });
