@@ -24,10 +24,17 @@ describe('pg', function() {
       });
 
       async.series([
+        queryClient(client, 'CREATE SCHEMA other_schema', []),
+        queryClient(client, 'CREATE TABLE other_schema.test1 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
+        queryClient(client, 'CREATE TABLE other_schema.test2 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
         queryClient(client, 'CREATE TABLE test1 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
         queryClient(client, 'CREATE TABLE test2 (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
         queryClient(client, 'CREATE TABLE \"Test3\" (id SERIAL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
         queryClient(client, 'CREATE TABLE schema_migrations (id SERIAL, version VARCHAR(255) NOT NULL, PRIMARY KEY(id));', []),
+        queryClient(client, 'INSERT INTO other_schema.test1 (title) VALUES ($1);', ["foo"]),
+        queryClient(client, 'INSERT INTO other_schema.test1 (title) VALUES ($1);', ["bar"]),
+        queryClient(client, 'INSERT INTO other_schema.test2 (title) VALUES ($1);', ["foo"]),
+        queryClient(client, 'INSERT INTO other_schema.test2 (title) VALUES ($1);', ["bar"]),
         queryClient(client, 'INSERT INTO test1 (title) VALUES ($1);', ["foo"]),
         queryClient(client, 'INSERT INTO test1 (title) VALUES ($1);', ["bar"]),
         queryClient(client, 'INSERT INTO test2 (title) VALUES ($1);', ["foo"]),
@@ -44,6 +51,7 @@ describe('pg', function() {
       if (err) return done(err);
 
       async.parallel([
+        queryClient(client, "DROP SCHEMA other_schema CASCADE", []),
         queryClient(client, "DROP TABLE test1", []),
         queryClient(client, "DROP TABLE test2", []),
         queryClient(client,  "DROP TABLE \"Test3\"", []),
@@ -53,20 +61,55 @@ describe('pg', function() {
     });
   });
 
-  it('should delete all non skippedTable records', function(done) {
+  it('should delete all non skippedTable records in default schema', function(done) {
     pg.connect(connectionString, function(err, client, release) {
       if (err) return done(err);
 
       databaseCleaner.clean(client, function() {
         async.parallel([
+          queryClient(client, "SELECT * FROM other_schema.test1", []),
+          queryClient(client, "SELECT * FROM other_schema.test2", []),
           queryClient(client, "SELECT * FROM test1", []),
           queryClient(client, "SELECT * FROM test2", [])
         ], function(err, results) {
-          results[0].rows.length.should.equal(0);
-          results[1].rows.length.should.equal(0);
+          results[0].rows.length.should.equal(2);
+          results[1].rows.length.should.equal(2);
+          results[2].rows.length.should.equal(0);
+          results[3].rows.length.should.equal(0);
 
           release();
           done();
+        });
+      });
+    });
+  });
+
+  describe('specifying a different schema', function() {
+    before(function() {
+      var config = { postgresql: { strategy: 'truncation', skipTables: [], schema: 'other_schema' } };
+
+      databaseCleaner = new DatabaseCleaner('postgresql', config);
+    });
+
+    it('should delete all non skippedTable records in specified schema', function(done) {
+      pg.connect(connectionString, function(err, client, release) {
+        if (err) return done(err);
+
+        databaseCleaner.clean(client, function() {
+          async.parallel([
+              queryClient(client, "SELECT * FROM other_schema.test1", []),
+              queryClient(client, "SELECT * FROM other_schema.test2", []),
+              queryClient(client, "SELECT * FROM test1", []),
+              queryClient(client, "SELECT * FROM test2", [])
+          ], function(err, results) {
+            results[0].rows.length.should.equal(0);
+            results[1].rows.length.should.equal(0);
+            results[2].rows.length.should.equal(2);
+            results[3].rows.length.should.equal(2);
+
+            release();
+            done();
+          });
         });
       });
     });
@@ -124,13 +167,17 @@ describe('pg', function() {
           async.parallel([
             queryClient(client, "SELECT * FROM test1", []),
             queryClient(client, "SELECT * FROM test2", []),
+            queryClient(client, "SELECT * FROM other_schema.test2", []),
+            queryClient(client, "SELECT * FROM other_schema.test2", []),
             queryClient(client, "SELECT last_value FROM test1_id_seq", []),
             queryClient(client, "SELECT last_value FROM test2_id_seq", [])
           ], function(err, results) {
             results[0].rows.length.should.equal(0);
             results[1].rows.length.should.equal(0);
-            results[2].rows[0].last_value.should.equal('1');
-            results[3].rows[0].last_value.should.equal('1');
+            results[2].rows.length.should.equal(2);
+            results[3].rows.length.should.equal(2);
+            results[4].rows[0].last_value.should.equal('1');
+            results[5].rows[0].last_value.should.equal('1');
 
             release();
             done();
