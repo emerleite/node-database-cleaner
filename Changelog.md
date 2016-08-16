@@ -1,3 +1,8 @@
+1.1.0 / 2016-08-16
+==================
+
+  * Support for specifying postgres schema (Ian Zabel)
+
 1.0.0 / 2016-06-25
 ==================
 
