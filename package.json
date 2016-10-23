@@ -19,7 +19,8 @@
     "pg": "3.4.2",
     "redis": "0.12.1",
     "should": "4.0.4",
-    "elasticsearch": "8.2.0"
+    "elasticsearch": "8.2.0",
+    "sqlite3": "3.1.6"
   },
   "main": "index",
   "scripts": {
