@@ -7,6 +7,10 @@ module.exports = {
     skipTables: ['schema_migrations']
   },
 
+  sqlite: {
+    skipTables: ['schema_migrations']
+  },
+
   mongodb: {
       skipCollections: ['schema_migrations']
   }
