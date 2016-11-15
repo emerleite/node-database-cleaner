@@ -9,6 +9,11 @@ var mysql = require('mysql'),
       host: process.env.MYSQL_HOST || 'localhost',
       user: 'root',
       database: 'database_cleaner'
+    }),
+    pool = new mysql.createPool({
+      host: process.env.MYSQL_HOST || 'localhost',
+      user: 'root',
+      database: 'database_cleaner'
     });
 
 var queryClient = _.curry(function(query, values, next) {
@@ -123,6 +128,17 @@ describe('mysql', function() {
           done();
         });
       });
+    });
+  });
+
+  describe('with pooled connection', function() {
+    before(function(done) {
+      databaseCleaner = new DatabaseCleaner('mysql');
+      done();
+    });
+
+    it('should not error with a pooled connection', function(done) {
+      databaseCleaner.clean(pool, done);
     });
   });
 });
