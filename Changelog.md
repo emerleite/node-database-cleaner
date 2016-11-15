@@ -1,3 +1,9 @@
+1.2.0 / 2016-11-15
+==================
+
+  * Support pooled MySQL connections (Rob Wells)
+  * Fix: Do not drop VIEWS (Matteo Ferrando)
+
 1.1.0 / 2016-08-16
 ==================
 
