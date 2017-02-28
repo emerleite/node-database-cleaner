@@ -4,17 +4,14 @@ var should = require('should'),
     async = require('async'),
     databaseCleaner;
 
+var config = {
+  host: process.env.MYSQL_HOST || 'localhost',
+  user: 'root',
+  database: 'database_cleaner'
+}
 var mysql = require('mysql'),
-    client = new mysql.createConnection({
-      host: process.env.MYSQL_HOST || 'localhost',
-      user: 'root',
-      database: 'database_cleaner'
-    }),
-    pool = new mysql.createPool({
-      host: process.env.MYSQL_HOST || 'localhost',
-      user: 'root',
-      database: 'database_cleaner'
-    });
+    client = new mysql.createConnection(config),
+    pool = new mysql.createPool(config);
 
 var queryClient = _.curry(function(query, values, next) {
   client.query(query, values, next);
@@ -22,7 +19,7 @@ var queryClient = _.curry(function(query, values, next) {
 
 describe('mysql', function() {
   beforeEach(function(done) {
-    client.query('CREATE DATABASE database_cleaner', function(err) {
+    client.query('CREATE DATABASE ' + config.database, function(err) {
       if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
         throw err;
       }
@@ -145,7 +142,7 @@ describe('mysql', function() {
 
 describe('mysql empty', function() {
    beforeEach(function(done) {
-    client.query('CREATE DATABASE database_cleaner', function(err) {
+    client.query('CREATE DATABASE ' + config.database, function(err) {
       if (err && err.number != mysql.ERROR_DB_CREATE_EXISTS) {
         throw err;
       }
