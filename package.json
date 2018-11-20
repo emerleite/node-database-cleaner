@@ -1,26 +1,35 @@
 {
-  "name" : "database-cleaner",
-  "description" : "Database Cleaner for node.js",
-  "keywords" : [ "database", "cleaner", "mongodb", "redis", "couchdb", "tests", "package.json", "elasticsearch" ],
-  "version" : "1.2.0",
-  "author" : "Emerson Macedo <emerleite@gmail.com>",
-  "repository" : {
-    "type" : "git",
-    "url" : "git://github.com/emerleite/node-database-cleaner.git"
+  "name": "database-cleaner",
+  "description": "Database Cleaner for node.js",
+  "keywords": [
+    "database",
+    "cleaner",
+    "mongodb",
+    "redis",
+    "couchdb",
+    "tests",
+    "package.json",
+    "elasticsearch"
+  ],
+  "version": "1.2.0",
+  "author": "Emerson Macedo <emerleite@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/emerleite/node-database-cleaner.git"
   },
   "dependencies": {},
   "devDependencies": {
     "async": "1.5.0",
     "cradle": "0.5.8",
-    "lodash": "3.10.1",
-    "mocha": "1.21.4",
+    "elasticsearch": "^15.2.0",
+    "lodash": "^4.17.11",
+    "mocha": "^5.2.0",
     "mongodb": "2.1.10",
-    "mysql": "2.5.1",
-    "pg": "3.4.2",
+    "mysql": "^2.16.0",
+    "pg": "^7.6.1",
     "redis": "0.12.1",
     "should": "4.0.4",
-    "elasticsearch": "8.2.0",
-    "sqlite3": "3.1.6"
+    "sqlite3": "^4.0.4"
   },
   "main": "index",
   "scripts": {
