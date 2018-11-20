@@ -1,3 +1,9 @@
+1.3.0 / 2018-11-20
+==================
+  * Upgrade deps to newest versions
+  * Fixing Node deps security warning - Node 8, LTS and Stable
+  * fix: postgres -> error: cannot truncate a table referenced in a foreign key constraint (Sergei Khoma - @srghma)
+
 1.2.0 / 2016-11-15
 ==================
 
